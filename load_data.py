@@ -32,11 +32,11 @@ def load_temp(fname='GLB.Ts.csv'):
    try:
     #convert temperature to floating point number
     data = float(data)
-    #create floating point year: 
-    #January 2012 = 2012
-    #February 2012 = 2012 + 1/11
+    #create floating point year, based on middle of month: 
+    #January 2012 = 2012 + 0.5/11
+    #February 2012 = 2012 + 1.5/11
     #etc. for easier plotting
-    year_decimal.append(year+float(m_idx)/11.0)
+    year_decimal.append(year+(m_idx+0.5)/11.0)
     temp_decimal.append(data)
    except:
     #at the end of the current year, i.e. the future, we won't have data
@@ -46,13 +46,14 @@ def load_temp(fname='GLB.Ts.csv'):
  return data
 
 
-co2_data = load_co2()
-temp_data = load_temp()
+if __name__=='__main__':
+ co2_data = load_co2()
+ temp_data = load_temp()
 
-from pylab import *
-subplot(211)
-plot(co2_data['year_decimal'],co2_data['co2'])
-subplot(212)
-plot(temp_data['year_decimal'],temp_data['temp'])
-show()
+ from pylab import *
+ subplot(211)
+ plot(co2_data['year_decimal'],co2_data['co2'])
+ subplot(212)
+ plot(temp_data['year_decimal'],temp_data['temp'])
+ show()
 
